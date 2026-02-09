@@ -5,8 +5,7 @@ Automated API testing with contract checking
 """
 
 import requests
-import json
-from typing import Dict, Any, Optional
+from typing import Dict, Optional
 from dataclasses import dataclass
 from enum import Enum
 
@@ -84,15 +83,19 @@ def test_api():
     tester = APITester('https://api.example.com')
 
     # Test GET endpoint
-    tester.get('/users')
+    (
+        tester.get('/users')
         .expect_status(200)
         .expect_json_schema({'name': str})
         .run()
+    )
 
     # Test POST endpoint
-    tester.post('/users', json={'name': 'John'})
+    (
+        tester.post('/users', json={'name': 'John'})
         .expect_status(201)
         .run()
+    )
 
 
 if __name__ == "__main__":
